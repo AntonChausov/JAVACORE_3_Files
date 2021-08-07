@@ -14,12 +14,13 @@ public class Main {
                                         new GameProgress(9, 8, 7, 654),
                                         new GameProgress(6, 6, 6, 666)};
         String[] paths = new String[gameProgress.length];
-        String path = "";
-        String pathToZip = "Games//savegames//save.zip";
+        String pathToSaves = String.join(File.separator, "Games", "savegames") + File.separator;
+        String path;
+        String pathToZip = pathToSaves + "save.zip";
         int count = 0;
 
         for (GameProgress gp : gameProgress) {
-            path = "Games//savegames//save" + ++count + ".dat";
+            path = String.join("",pathToSaves, "save", Integer.toString(++count), ".dat");
             saveGame(gp, path);
             paths[count - 1] = path; //Как-то не изящно, но хочется, чтобы файлы начинались с "1", а вторую переменную добавлять не хочется
         }
@@ -29,10 +30,10 @@ public class Main {
 
     private static void zipFiles(String[] paths, String pathToZip) {
 
-        try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(new File(pathToZip)));) {
+        try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(new File(pathToZip)))) {
             for (String pathToFile : paths) {
-                int index = pathToFile.lastIndexOf("//");
-                String name = pathToFile.substring(index + 2);
+                int index = pathToFile.lastIndexOf(File.separator);
+                String name = pathToFile.substring(index + 1);
 
                 FileInputStream fis = new FileInputStream(pathToFile);
 

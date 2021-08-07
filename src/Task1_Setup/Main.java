@@ -8,38 +8,38 @@ public class Main {
 
     public static void main(String[] args) {
         StringBuilder log = new StringBuilder();
-
-        boolean gamesExist = prepareDirGames();
+        String destinationFolder = "Games";
+        boolean gamesExist = prepareDirGames(destinationFolder);
 
         if(!gamesExist){
             System.out.println("Something wrong. Setup canceled.");
             return;
         }
 
-        createDir(log, "Games//src");
-        createDir(log, "Games//res");
-        createDir(log, "Games//savegames");
-        createDir(log, "Games//temp");
+        createDir(log, String.join(File.separator, destinationFolder, "src"));
+        createDir(log, String.join(File.separator, destinationFolder, "res"));
+        createDir(log, String.join(File.separator, destinationFolder, "savegames"));
+        createDir(log, String.join(File.separator, destinationFolder, "temp"));
 
-        createDir(log, "Games//src//main");
-        createDir(log, "Games//src//test");
+        createDir(log, String.join(File.separator, destinationFolder, "src", "main"));
+        createDir(log, String.join(File.separator, destinationFolder, "src", "test"));
 
-        createDir(log, "Games//res//drawables");
-        createDir(log, "Games//res//vectors");
-        createDir(log, "Games//res//icons");
+        createDir(log, String.join(File.separator, destinationFolder, "res", "drawables"));
+        createDir(log, String.join(File.separator, destinationFolder, "res", "vectors"));
+        createDir(log, String.join(File.separator, destinationFolder, "res", "icons"));
 
-        createEmptyFile(log, "Games//src//main//Main.java");
-        createEmptyFile(log, "Games//src//main//Utils.java");
+        createEmptyFile(log, String.join(File.separator, destinationFolder, "src", "main", "Main.java"));
+        createEmptyFile(log, String.join(File.separator, destinationFolder, "src", "main", "Utils.java"));
 
-        createEmptyFile(log, "Games//temp//temp.txt");
+        createEmptyFile(log, String.join(File.separator, destinationFolder, "temp", "temp.txt"));
 
         writeLog(log);
     }
 
-    private static boolean prepareDirGames() {
+    private static boolean prepareDirGames(String destination) {
         //Папка Games в корне проекта
         //но если нет...
-        File dirGames = new File("Games");
+        File dirGames = new File(destination);
         boolean gamesExist = dirGames.exists();
         if (!gamesExist){
             gamesExist = dirGames.mkdir();

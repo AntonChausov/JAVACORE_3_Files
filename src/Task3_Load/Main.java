@@ -12,8 +12,8 @@ import java.util.zip.ZipInputStream;
 public class Main {
 
     public static void main(String[] args) {
-        String pathToZip = "Games//savegames//save.zip";
-        String pathToDestination = "Games//savegames//";
+        String pathToDestination = String.join(File.separator,"Games", "savegames") + File.separator;
+        String pathToZip = pathToDestination + "save.zip";
 
         openZip(pathToZip, pathToDestination);
         openFiles(pathToDestination);
@@ -22,13 +22,19 @@ public class Main {
     private static void openFiles(String pathToDestination) {
         // по заданию надо открыть один файл, сделаем все 3
         File dirSavegames = new File(pathToDestination);
-        if (dirSavegames.isDirectory()){
-            for (File save : dirSavegames.listFiles()){
-                if (save.isDirectory()){
+        if (dirSavegames.isDirectory()) {
+            for (File save : dirSavegames.listFiles()) {
+                if (save.isDirectory()) {
                     continue;
                 }
                 String path = save.getPath();
-                openProgress(path); // как требуется по заданию (хотя, есть файл, можно сразу передавать его, в принципе)
+                int i = path.lastIndexOf('.');
+                if (i >= 0) {
+                    String extension = path.substring(i + 1);
+                    if (extension.equals("dat")) {
+                        openProgress(path); // как требуется по заданию (хотя, есть файл, можно сразу передавать его, в принципе)
+                    }
+                }
             }
         }
     }
