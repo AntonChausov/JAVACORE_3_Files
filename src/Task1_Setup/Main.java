@@ -31,9 +31,10 @@ public class Main {
         createEmptyFile(log, String.join(File.separator, destinationFolder, "src", "main", "Main.java"));
         createEmptyFile(log, String.join(File.separator, destinationFolder, "src", "main", "Utils.java"));
 
-        createEmptyFile(log, String.join(File.separator, destinationFolder, "temp", "temp.txt"));
+        String pathToTempTXT = String.join(File.separator, destinationFolder, "temp", "temp.txt");
+        createEmptyFile(log, pathToTempTXT);
 
-        writeLog(log);
+        writeLog(log, pathToTempTXT);
     }
 
     private static boolean prepareDirGames(String destination) {
@@ -47,9 +48,9 @@ public class Main {
         return gamesExist;
     }
 
-    private static void writeLog(StringBuilder log) {
+    private static void writeLog(StringBuilder log, String path) {
         String text = log.toString();
-        try (FileWriter writer = new FileWriter("Games//temp//temp.txt", false)) {
+        try (FileWriter writer = new FileWriter(path, false)) {
             writer.write(text);
             writer.flush();
         } catch (IOException ex) {
